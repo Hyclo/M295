@@ -34,6 +34,21 @@ let tasks = [
 ];
 
 router.use(function (req, res, next) {
+   const task = req.body;
+
+   const pathsRequieringBody = ['/tasks', '/tasks/:id'];
+
+   pathsRequieringBody.forEach((path) => {
+      if (req.path === path && !task) {
+         res.status(406).send(JSON.stringify({ error: 'Body is missing!' }));
+         return;
+      }
+   });
+
+   next();
+});
+
+router.use(function (req, res, next) {
    let cookies = req.cookies;
 
    if (req.path === '/login') {
@@ -44,15 +59,20 @@ router.use(function (req, res, next) {
    if (cookies["I'm a Cookie"]) {
       next();
    } else {
-      res.status(403).send('No Cookie');
+      res.status(403).send(
+         JSON.stringify({
+            error: 'There is no cookie, you have to login first!',
+         }),
+      );
    }
 });
 
 function isBodyValid(res, body) {
-   if (!body) {
+   if (!body.id || !body.name || !body.description) {
       res.status(400).send('Invaild body!');
       return false;
    }
+
    return true;
 }
 
@@ -61,9 +81,10 @@ router.get('/tasks', function (req, res, next) {
 });
 
 router.post('/tasks', function (req, res, next) {
-   if (!isBodyValid(res, req.body)) return;
-
    const task = req.body;
+
+   if (!isBodyValid(res, task)) return;
+
    tasks.push(task);
    res.status(201).send(task);
 });
@@ -82,9 +103,9 @@ router.get('/tasks/:id', function (req, res, next) {
 
 router.put('/tasks/:id', function (req, res, next) {
    const id = parseInt(req.params.id);
-   const task = tasks.find((task) => task.id === id);
+   const index = tasks.indexOf(tasks.filter((task) => task.id === id)[0]);
 
-   if (!task) {
+   if (index === -1) {
       res.status(404).send('Task not found');
       return;
    }
@@ -93,7 +114,8 @@ router.put('/tasks/:id', function (req, res, next) {
 
    const newTask = req.body;
    tasks = tasks.map((task) => (task.id === id ? newTask : task));
-   res.status(200).send(newTask);
+
+   res.status(204).send(newTask);
 });
 
 router.delete('/tasks/:id', function (req, res, next) {
@@ -114,8 +136,6 @@ router.delete('/tasks/:id', function (req, res, next) {
 
 router.post('/login', function (req, res, next) {
    let user = req.body;
-
-   if (!isBodyValid(res, user)) return;
 
    if (user.email.match(emailRegex) && user.password == 'm295') {
       res.cookie("I'm a Cookie", {
