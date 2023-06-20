@@ -1,0 +1,44 @@
+{
+  "name": "zli-backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "lint": "eslint --fix ./**/*.js",
+    "format": "prettier --write ./**/*.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "bl": "^6.0.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-session": "^1.17.3",
+    "fetch": "^1.1.0",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1",
+    "node-fetch": "^3.3.1"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.8",
+    "swagger-autogen": "^2.23.2",
+    "swagger-ui-express": "^4.6.3"
+  },
+  "description": "��#\u0000 \u0000z\u0000l\u0000i\u0000-\u0000b\u0000a\u0000c\u0000k\u0000e\u0000n\u0000d\u0000\r\u0000 \u0000",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyclo/zli-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hyclo/zli-backend/issues"
+  },
+  "homepage": "https://github.com/Hyclo/zli-backend#readme"
+}
