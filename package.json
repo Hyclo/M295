@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "lint": "eslint --fix ./**/*.js",
     "format": "prettier --write ./**/*.js",
-    "test": "mocha"
+    "swagger": "node ./routes/swagger.js"
   },
   "dependencies": {
     "bl": "^6.0.2",
