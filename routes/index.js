@@ -20,16 +20,22 @@ let tasks = [
       id: 1,
       name: 'Task 1',
       description: 'Description 1',
+      createdAt: "2023-06-10",
+      finishedAt: "2023-06-10",
    },
    {
       id: 2,
       name: 'Task 2',
       description: 'Description 2',
+      createdAt: "2023-06-10",
+      finishedAt: "2023-06-10",
    },
    {
       id: 3,
       name: 'Task 3',
       description: 'Description 3',
+      createdAt: "2023-06-10",
+      finishedAt: "2023-06-10",
    },
 ];
 
@@ -68,7 +74,7 @@ router.use(function (req, res, next) {
 });
 
 function isBodyValid(res, body) {
-   if (!body.id || !body.name || !body.description) {
+   if (!body.id || !body.name || !body.description || !body.createdAt || !body.finishedAt) {
       res.status(400).send('Invaild body!');
       return false;
    }
@@ -166,9 +172,9 @@ router.get('/verify', function (req, res, next) {
 
    if (cookies["I'm a Cookie"]) {
       res.status(200).send(cookies["I'm a Cookie"]);
-   } else {
-      res.status(401).send('No Cookie');
-   }
+      return;
+   } 
+   next();
 });
 
 module.exports = router;
